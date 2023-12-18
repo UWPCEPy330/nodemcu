@@ -27,6 +27,7 @@ from time import sleep
 rtc = RTC()
 
 pin = Pin(10, Pin.OUT)
+switch = Pin(4, Pin.IN)
 
 try:
     seconds = ntptime.time()
@@ -50,6 +51,11 @@ def dummy():
 
     return response_template % body
 
+def switch_status():
+    # body = "{state: " . switch.value() . "}"
+    body = "Switch is:{}".format(switch.value())
+    return response_template % body
+
 def led_on():
     body = "Light On!"
     pin.value(1)
@@ -65,6 +71,7 @@ handlers = {
     'dummy': dummy,
     'on': led_on,
     'off': led_off,
+    'switch': switch_status,
 }
 
 def main():
